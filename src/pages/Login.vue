@@ -21,11 +21,11 @@ const LoginPage = defineComponent({
 
     const loginChallenge = computed(() => route.query.login_challenge)
 
-    const sendLogin = async (e) => {
+    const sendLogin = async (e: Event) => {
       e.preventDefault()
       const json = {email: email.value, password: password.value, loginChallenge: loginChallenge.value}
       try {
-        const response = await httpClient.post("auth/login", {json}).json()
+        const response: { redirectTo?: string } = await httpClient.post("auth/login", {json}).json()
         console.log(response);
         if (response?.redirectTo) {
           window.location.href = response?.redirectTo
