@@ -1,7 +1,6 @@
 <template>
   <h1>Login</h1>
   <form @submit="sendLogin">
-    <input type="hidden" name="loginChallenge" :value="loginChallenge">
     <input type="text" name="email" placeholder="email" v-model="email"> <br>
     <input type="text" name="password" placeholder="password" v-model="password"> <br>
     <input type="submit" value="Ok">
@@ -12,7 +11,7 @@
 import { computed, defineComponent, ref } from "vue"
 import { useRoute } from "vue-router"
 import httpClient from "../utils/httpClient"
-import ky from "ky"
+import { HTTPError } from "ky"
 
 const LoginPage = defineComponent({
   setup(props, context) {
@@ -33,7 +32,7 @@ const LoginPage = defineComponent({
         }
       } catch (error) {
         console.error(error)
-        if (error instanceof ky.HTTPError) {
+        if (error instanceof HTTPError) {
           console.log(error.response);
           console.log(error.message);
           console.log(error.name);

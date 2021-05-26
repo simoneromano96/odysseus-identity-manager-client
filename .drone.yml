@@ -1,0 +1,19 @@
+---
+kind: pipeline
+name: build-beta
+
+steps:
+  - name: build-beta
+    image: plugins/docker
+    settings:
+      registry: ghcr.io
+      username: 
+        from_secret: github_username
+      password: 
+        from_secret: github_token
+      repo: ghcr.io/simoneromano96/odysseus-identity-manager/client
+      context: .
+      dockerfile: ./.docker/odysseus-identity-manager-client.dockerfile
+      auto_tag: true
+      config:
+        from_secret: docker_auth_config
