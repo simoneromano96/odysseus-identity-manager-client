@@ -1,7 +1,7 @@
 import ky from "ky"
 
 const httpClient = ky.create({
-  prefixUrl: "http://localhost:3001/",
+  prefixUrl: "http://localhost:8000/api/",
   redirect: "follow",
   mode: "cors",
   throwHttpErrors: true,

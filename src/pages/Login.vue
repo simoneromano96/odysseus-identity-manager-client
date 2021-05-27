@@ -1,7 +1,7 @@
 <template>
   <h1>Login</h1>
   <form @submit="sendLogin">
-    <input type="text" name="email" placeholder="email" v-model="email"> <br>
+    <input type="text" name="username" placeholder="username" v-model="username"> <br>
     <input type="text" name="password" placeholder="password" v-model="password"> <br>
     <input type="submit" value="Ok">
   </form>
@@ -10,22 +10,23 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue"
 import { useRoute } from "vue-router"
-import httpClient from "../utils/httpClient"
 import { HTTPError } from "ky"
+
+import httpClient from "../utils/httpClient"
 
 const LoginPage = defineComponent({
   setup(props, context) {
     const route = useRoute()
-    const email = ref("")
+    const username = ref("")
     const password = ref("")
 
-    const loginChallenge = computed(() => route.query.login_challenge)
+    const loginChallenge = computed(() => route.query.login_challenge as string)
 
     const sendLogin = async (e: Event) => {
       e.preventDefault()
-      const json = {email: email.value, password: password.value, loginChallenge: loginChallenge.value}
+      const json = {username: username.value, password: password.value, }
       try {
-        const response: { redirectTo?: string } = await httpClient.post("auth/login", {json}).json()
+        const response: { redirectTo?: string } = await httpClient.post("v1/login", {json, searchParams: { "login_challenge": loginChallenge.value } }).json()
         console.log(response);
         if (response?.redirectTo) {
           window.location.href = response?.redirectTo
@@ -43,7 +44,7 @@ const LoginPage = defineComponent({
     return {
       loginChallenge,
       sendLogin,
-      email,
+      username,
       password
     }
   },
