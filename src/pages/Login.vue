@@ -26,10 +26,10 @@ const LoginPage = defineComponent({
       e.preventDefault()
       const json = {username: username.value, password: password.value, }
       try {
-        const response: { redirectTo?: string } = await httpClient.post("v1/login", {json, searchParams: { "login_challenge": loginChallenge.value } }).json()
+        const response: { redirect_to?: string } = await httpClient.post("v1/login", {json, searchParams: { "login_challenge": loginChallenge.value } }).json()
         console.log(response);
-        if (response?.redirectTo) {
-          window.location.href = response?.redirectTo
+        if (response?.redirect_to) {
+          window.location.href = response?.redirect_to
         }
       } catch (error) {
         console.error(error)
