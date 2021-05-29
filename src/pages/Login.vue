@@ -20,7 +20,7 @@ const LoginPage = defineComponent({
     const username = ref("")
     const password = ref("")
 
-    const loginChallenge = computed(() => route.query.login_challenge as string)
+    const loginChallenge = computed(() => route.query.challenge as string)
 
     const sendLogin = async (e: Event) => {
       e.preventDefault()

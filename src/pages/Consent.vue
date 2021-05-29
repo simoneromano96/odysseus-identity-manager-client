@@ -2,6 +2,12 @@
   <h1>Consent</h1>
   
   <form @submit="sendConsent">
+    <p> The application {{clientName}} wants access to the following information: </p>
+    <ul>
+      <li v-for="scope, index in requestedScopes" :key="index">
+        {{scope}}
+      </li>
+    </ul>
     <input type="submit" value="Ok">
   </form>
 </template>
@@ -17,15 +23,18 @@ const ConsentPage = defineComponent({
   setup(props, context) {
     const route = useRoute()
 
-    const consentChallenge = computed(() => route.query.consent_challenge as string)
+    const consentChallenge = computed(() => route.query.challenge as string)
+    const clientName = computed(() => route.query.client_name as string)
+    const requestedScopes = computed(() => route.query.requested_scope as string[])
 
     const sendConsent = async (e: Event) => {
       e.preventDefault()
       try {
-        const response: { redirectTo?: string } = await httpClient.get("v1/consent", { searchParams: { "consent_challenge": consentChallenge.value } }).json()
+        const json = {scopes: requestedScopes.value};
+        const response: { redirect_to?: string } = await httpClient.post("v1/consent", { json, searchParams: { "consent_challenge": consentChallenge.value } }).json()
         console.log(response);
-        if (response?.redirectTo) {
-          window.location.href = response?.redirectTo
+        if (response?.redirect_to) {
+          window.location.href = response?.redirect_to
         }
       } catch (error) {
         console.error(error)
@@ -40,6 +49,8 @@ const ConsentPage = defineComponent({
     return {
       consentChallenge,
       sendConsent,
+      clientName,
+      requestedScopes
     }
   },
 })
