@@ -23,7 +23,7 @@ const ConsentPage = defineComponent({
   setup(props, context) {
     const route = useRoute()
 
-    const consentChallenge = computed(() => route.query.challenge as string)
+    const consentChallenge = computed(() => route.query.consent_challenge as string)
     const clientName = computed(() => route.query.client_name as string)
     const requestedScopes = computed(() => route.query.requested_scope as string[])
 
