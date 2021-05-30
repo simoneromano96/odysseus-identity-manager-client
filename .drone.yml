@@ -5,6 +5,9 @@ name: odysseus-identity-manager-client
 steps:
   - name: build
     image: plugins/docker
+    environment:
+      VITE_API_URL:
+        from_secret: api_url
     settings:
       registry: ghcr.io
       username: 
@@ -17,6 +20,8 @@ steps:
       auto_tag: true
       config:
         from_secret: docker_auth_config
+      build_args_from_env:
+        - VITE_API_URL
 
 trigger:
   event:
