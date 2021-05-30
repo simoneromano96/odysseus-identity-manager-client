@@ -1,7 +1,7 @@
 import ky from "ky"
 
 const httpClient = ky.create({
-  prefixUrl: import.meta.env.VITE_API_URL || "http://localhost:8000/api/",
+  prefixUrl: String(import.meta.env.VITE_API_URL) || "http://localhost:8000/api/",
   redirect: "follow",
   mode: "cors",
   throwHttpErrors: true,
