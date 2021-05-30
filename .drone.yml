@@ -17,3 +17,9 @@ steps:
       auto_tag: true
       config:
         from_secret: docker_auth_config
+
+trigger:
+  event:
+  - tag
+  - promote
+  - rollback
