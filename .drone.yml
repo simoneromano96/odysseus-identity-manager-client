@@ -8,6 +8,8 @@ steps:
     environment:
       VITE_API_URL:
         from_secret: api_url
+      VITE_PREFIX:
+        from_secret: app_prefix
     settings:
       registry: ghcr.io
       username: 
@@ -22,6 +24,7 @@ steps:
         from_secret: docker_auth_config
       build_args_from_env:
         - VITE_API_URL
+        - VITE_PREFIX
 
 trigger:
   event:

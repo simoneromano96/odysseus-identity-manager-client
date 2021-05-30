@@ -12,6 +12,7 @@ const routes = [
 ]
 
 const router = createRouter({
+  base: import.meta.env.VITE_PREFIX || "/",
   history: createWebHistory(),
   routes,
   parseQuery: (query) => {
