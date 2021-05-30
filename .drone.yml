@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: odysseus-identity-manager-server
+name: odysseus-identity-manager-client
 
 steps:
   - name: build
