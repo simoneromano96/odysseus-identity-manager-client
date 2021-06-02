@@ -12,7 +12,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory("/app"),
+  history: createWebHistory(),
   routes,
   parseQuery: (query) => {
     return queryString.parse(query, { arrayFormat: "index" });
