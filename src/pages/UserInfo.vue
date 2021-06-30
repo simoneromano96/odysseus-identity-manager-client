@@ -5,7 +5,14 @@
     <img src="../assets/logo.svg" alt="Odysseus logo" />
   </div>
   <div>
-    {{ userInfoRef?.email }}
+    <p>Welcome back, {{ userInfoRef?.email }}!</p>
+    <p>
+      <label class="email-verified">
+        <input readonly="true" type="checkbox" class="filled-in" :checked="userInfoRef?.emailVerified" />
+        <span>Email verified</span>
+      </label>
+    </p>
+    <span v-if="!userInfoRef?.emailVerified">Please check your email for the verification code</span>
   </div>
 </template>
 
@@ -41,3 +48,8 @@ const UserInfoPage = defineComponent({
 
 export default UserInfoPage
 </script>
+
+<style lang="sass">
+.email-verified
+  pointer-events: none
+</style>
