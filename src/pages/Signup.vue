@@ -1,20 +1,27 @@
 <template>
   <div class="container">
     <h1>Signup</h1>
-    <form @submit="sendLogin">
+    <form @submit="sendSignup">
       <div class="card">
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix mdi mdi-email" />
-            <input id="email" v-model="email" type="email" name="email" class="validate" required />
+            <input
+              id="email"
+              type="email"
+              name="email"
+              class="validate"
+              required
+              @input="e => (email = e?.target?.value)"
+            />
             <label for="email">
               E-Mail
               <code>*</code>
             </label>
-            <span
-              class="helper-text"
-              data-error="Invalid or empty email!"
-            >Your preferred e-mail, check that it is correct since it will be validated! We will send a verification code</span>
+            <span class="helper-text" data-error="Invalid or empty email!"
+              >Your preferred e-mail, check that it is correct since it will be validated! We will send a verification
+              code</span
+            >
           </div>
         </div>
         <div class="row">
@@ -29,22 +36,14 @@
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix mdi mdi-key" />
-            <input
-              id="password"
-              v-model="password"
-              type="password"
-              name="password"
-              class="validate"
-              required
-            />
+            <input id="password" v-model="password" type="password" name="password" class="validate" required />
             <label for="password">
               Password
               <code>*</code>
             </label>
-            <span
-              class="helper-text"
-              data-error="Invalid or empty password!"
-            >A secure password or passphrase that you will use to access your account</span>
+            <span class="helper-text" data-error="Invalid or empty password!"
+              >A secure password or passphrase that you will use to access your account</span
+            >
           </div>
         </div>
 
@@ -54,9 +53,7 @@
         </div>
 
         <div class="card-action actions">
-          <button class="btn-flat waves-effect red-text" type="reset">
-            Cancel
-          </button>
+          <button class="btn-flat waves-effect red-text" type="reset">Cancel</button>
           <button class="btn waves-effect waves-light" type="submit">
             Signup
             <i class="material-icons right mdi mdi-send"></i>
@@ -76,19 +73,19 @@ import httpClient from "../utils/httpClient"
 
 const SignupPage = defineComponent({
   setup(props, context) {
-    const signupState = reactive({
-      email: null,
-      password: null,
-      username: null,
-    })
+    const emailRef = ref("")
+    const passwordRef = ref("")
+    const usernameRef = ref("")
 
-    const sendLogin = async (e: Event) => {
+    const sendSignup = async (e: Event) => {
       e.preventDefault()
-      const { email, username, password } = signupState
+      const email = emailRef.value
+      const password = passwordRef.value
+      const username = usernameRef.value
       // When username is empty, send null
       const json = { email, password, username: username || null }
       try {
-        const response: { redirect_to?: string } = await httpClient.post("v1/signup", { json }).json()
+        const response: { redirect_to?: string } = await httpClient.post("v1/local/signup", { json }).json()
         console.log(response)
         if (response?.redirect_to) {
           window.location.href = response?.redirect_to
@@ -104,10 +101,10 @@ const SignupPage = defineComponent({
     }
 
     return {
-      sendLogin,
-      username: signupState.username,
-      email: signupState.email,
-      password: signupState.password,
+      sendSignup,
+      username: usernameRef,
+      email: emailRef,
+      password: passwordRef,
     }
   },
 })
