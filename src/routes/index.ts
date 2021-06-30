@@ -5,12 +5,14 @@ import Home from "../pages/Home.vue"
 import Login from "../pages/Login.vue"
 import Consent from "../pages/Consent.vue"
 import Signup from "../pages/Signup.vue"
+import UserInfo from "../pages/UserInfo.vue"
 
 const routes = [
   { path: "/", component: Home },
   { path: "/login", component: Login },
   { path: "/consent", component: Consent },
   { path: "/signup", component: Signup },
+  { path: "/user-info", component: UserInfo },
 ]
 
 const router = createRouter({

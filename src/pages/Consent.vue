@@ -15,9 +15,9 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue"
 import { useRoute } from "vue-router"
-import { HTTPError } from "ky"
 
-import httpClient from "../utils/httpClient"
+import apiClient from "../utils/apiClient"
+// import httpClient from "../utils/httpClient"
 
 const ConsentPage = defineComponent({
   setup(props, context) {
@@ -30,21 +30,14 @@ const ConsentPage = defineComponent({
     const sendConsent = async (e: Event) => {
       e.preventDefault()
       try {
-        const json = { scopes: requestedScopes.value }
-        const response: { redirect_to?: string } = await httpClient
-          .post("v1/consent", { json, searchParams: { consent_challenge: consentChallenge.value } })
-          .json()
+        const body = { scopes: requestedScopes.value }
+        const response = await apiClient.apiV1ConsentPost({ body, consentChallenge: consentChallenge.value })
         console.log(response)
-        if (response?.redirect_to) {
-          window.location.href = response?.redirect_to
+        if (response.redirectTo) {
+          window.location.href = response.redirectTo
         }
       } catch (error) {
         console.error(error)
-        if (error instanceof HTTPError) {
-          console.log(error.response)
-          console.log(error.message)
-          console.log(error.name)
-        }
       }
     }
 

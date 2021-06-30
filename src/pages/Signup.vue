@@ -6,14 +6,7 @@
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix mdi mdi-email" />
-            <input
-              id="email"
-              type="email"
-              name="email"
-              class="validate"
-              required
-              @input="e => (email = e?.target?.value)"
-            />
+            <input id="email" v-model="email" type="email" name="email" class="validate" required />
             <label for="email">
               E-Mail
               <code>*</code>
@@ -69,7 +62,8 @@ import { computed, defineComponent, reactive, ref } from "vue"
 import { useRoute } from "vue-router"
 import { HTTPError } from "ky"
 
-import httpClient from "../utils/httpClient"
+import apiClient from "../utils/apiClient"
+// import httpClient from "../utils/httpClient"
 
 const SignupPage = defineComponent({
   setup(props, context) {
@@ -83,20 +77,12 @@ const SignupPage = defineComponent({
       const password = passwordRef.value
       const username = usernameRef.value
       // When username is empty, send null
-      const json = { email, password, username: username || null }
+      const body = { email, password, username }
       try {
-        const response: { redirect_to?: string } = await httpClient.post("v1/local/signup", { json }).json()
+        const response = await apiClient.apiV1LocalSignupPost({ body })
         console.log(response)
-        if (response?.redirect_to) {
-          window.location.href = response?.redirect_to
-        }
       } catch (error) {
         console.error(error)
-        if (error instanceof HTTPError) {
-          console.log(error.response)
-          console.log(error.message)
-          console.log(error.name)
-        }
       }
     }
 

@@ -46,9 +46,8 @@
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from "vue"
 import { useRoute } from "vue-router"
-import { HTTPError } from "ky"
 
-import httpClient from "../utils/httpClient"
+import apiClient from "../utils/apiClient"
 
 const LoginPage = defineComponent({
   setup(props, context) {
@@ -62,27 +61,24 @@ const LoginPage = defineComponent({
       e.preventDefault()
       const email = emailRef.value
       const password = passwordRef.value
-      const json = { email, password }
+      const body = { email, password }
       try {
         if (loginChallenge.value) {
-          const response: { redirect_to?: string } = await httpClient
-            .post("v1/login", { json, searchParams: { login_challenge: loginChallenge.value } })
-            .json()
+          const response = await apiClient.apiV1LoginPost({ body, loginChallenge: loginChallenge.value })
+          // const response: { redirect_to?: string } = await httpClient
+          //   .post("v1/login", { json, searchParams: { login_challenge: loginChallenge.value } })
+          //   .json()
           // console.log(response)
-          if (response?.redirect_to) {
-            window.location.href = response?.redirect_to
+          if (response.redirectTo) {
+            window.location.href = response.redirectTo
           }
         } else {
-          const response = await httpClient.post("v1/local/login", { json }).json()
+          const response = await apiClient.apiV1LocalLoginPost({ body })
+          //  await httpClient.post("v1/local/login", { json }).json()
           console.log(response)
         }
       } catch (error) {
         console.error(error)
-        if (error instanceof HTTPError) {
-          console.log(error.response)
-          console.log(error.message)
-          console.log(error.name)
-        }
       }
     }
 

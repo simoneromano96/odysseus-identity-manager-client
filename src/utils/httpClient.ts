@@ -7,6 +7,7 @@ const httpClient = ky.create({
   redirect: "follow",
   mode: "cors",
   throwHttpErrors: true,
+  credentials: "include",
   hooks: {
     afterResponse: [
       (_input, _options, response) => {
