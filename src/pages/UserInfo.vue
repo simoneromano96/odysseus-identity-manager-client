@@ -1,5 +1,12 @@
 <template>
   <h1>User Info</h1>
+  <h2>Manage your account</h2>
+  <div>
+    <img src="../assets/logo.svg" alt="Odysseus logo" />
+  </div>
+  <div>
+    {{ userInfoRef?.email }}
+  </div>
 </template>
 
 <script lang="ts">
@@ -9,10 +16,11 @@ import { HTTPError } from "ky"
 
 // import httpClient from "../utils/httpClient"
 import apiClient from "../utils/apiClient"
+import { UserInfo } from "../openapi"
 
 const UserInfoPage = defineComponent({
   setup(props, context) {
-    const userInfoRef = ref()
+    const userInfoRef = ref<UserInfo>()
 
     const getUserInfo = async () => {
       try {
@@ -20,11 +28,6 @@ const UserInfoPage = defineComponent({
         userInfoRef.value = response
       } catch (error) {
         console.error(error)
-        if (error instanceof HTTPError) {
-          console.log(error.response)
-          console.log(error.message)
-          console.log(error.name)
-        }
       }
     }
 
