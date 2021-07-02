@@ -1,6 +1,6 @@
 import { createApp } from "vue"
-import "materialize-css/dist/css/materialize.css"
-import "materialize-css/dist/js/materialize.js"
+import "@materializecss/materialize/dist/css/materialize.css"
+import "@materializecss/materialize/dist/js/materialize.js"
 import "@mdi/font/css/materialdesignicons.css"
 
 import App from "./App.vue"

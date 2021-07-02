@@ -5,8 +5,8 @@
       <div class="card">
         <div class="row">
           <div class="input-field col s12">
-            <i class="material-icons prefix mdi mdi-email" />
-            <input id="email" v-model="email" type="email" name="email" class="validate" required />
+            <i class="material-icons prefix mdi mdi-email"></i>
+            <input id="email" v-model="email" type="email" name="email" class="validate" :required="true" />
             <label for="email">
               E-Mail
               <code>*</code>
@@ -16,8 +16,8 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <i class="material-icons prefix mdi mdi-key" />
-            <input id="password" v-model="password" type="password" name="password" class="validate" required />
+            <i class="material-icons prefix mdi mdi-key"></i>
+            <input id="password" v-model="password" type="password" name="password" class="validate" :required="true" />
             <label for="password">
               Password
               <code>*</code>
@@ -41,19 +41,35 @@
       </div>
     </form>
   </div>
+  <!-- Logged in user modal -->
+  <div id="modal-logged-in" ref="loggedInModalRef" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>You successfully logged in!</h4>
+      <p>You can now check your account data in the user dashboard</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light" @click="router.push('/user-info')">
+        Go to my dashboard
+        <i class="material-icons right mdi mdi-send"></i>
+      </button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from "vue"
-import { useRoute } from "vue-router"
+import { computed, defineComponent, onMounted, reactive, ref } from "vue"
+import { useRoute, useRouter } from "vue-router"
 
 import apiClient from "../utils/apiClient"
 
 const LoginPage = defineComponent({
   setup(props, context) {
     const route = useRoute()
+    const router = useRouter()
     const emailRef = ref("")
     const passwordRef = ref("")
+    const loggedInModalRef = ref()
+    const loggedInModal = ref()
 
     const loginChallenge = computed(() => route.query.login_challenge as string)
 
@@ -73,20 +89,38 @@ const LoginPage = defineComponent({
             window.location.href = response.redirectTo
           }
         } else {
-          const response = await apiClient.apiV1LocalLoginPost({ body })
+          await apiClient.apiV1LocalLoginPost({ body })
           //  await httpClient.post("v1/local/login", { json }).json()
-          console.log(response)
+          loggedInModal.value.open()
         }
       } catch (error) {
         console.error(error)
+        let text
+        if (error instanceof Response) {
+          const body = await error.json()
+          const errorMessage = body.error
+          text = errorMessage
+        } else {
+          text = error.message || "Generic error"
+        }
+        M.toast({ text, classes: "red darken-1 flow-text" })
       }
     }
+
+    onMounted(() => {
+      const loggedInModalDOM = loggedInModalRef.value
+      M.Modal.init(loggedInModalDOM)
+      const instance = M.Modal.getInstance(loggedInModalDOM)
+      loggedInModal.value = instance
+    })
 
     return {
       loginChallenge,
       sendLogin,
+      loggedInModalRef,
       email: emailRef,
       password: passwordRef,
+      router,
     }
   },
 })

@@ -3,10 +3,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, onMounted } from "vue"
 
 export default defineComponent({
   name: "App",
+  setup: () => {
+    onMounted(() => {
+      M.AutoInit()
+    })
+  }
 })
 </script>
 

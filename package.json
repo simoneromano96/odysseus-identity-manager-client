@@ -9,14 +9,15 @@
     "lint-and-fix": "eslint --fix --ext .ts,vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@materializecss/materialize": "^1.1.0-alpha",
     "@mdi/font": "^5.9.55",
     "ky": "^0.28.5",
-    "materialize-css": "^1.0.0-rc.2",
     "query-string": "^7.0.1",
     "vue": "^3.0.5",
     "vue-router": "^4.0.8"
   },
   "devDependencies": {
+    "@types/materialize-css": "^1.0.10",
     "@types/qs": "^6.9.6",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
