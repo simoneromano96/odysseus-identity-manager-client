@@ -103,7 +103,7 @@ const LoginPage = defineComponent({
         } else {
           text = error.message || "Generic error"
         }
-        M.toast({ text, classes: "red darken-1 flow-text" })
+        M.toast({ html: text, classes: "red darken-1 flow-text" })
       }
     }
 
