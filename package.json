@@ -1,6 +1,6 @@
 {
   "name": "odysseus-identity-manager-client",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
