@@ -5,6 +5,7 @@ import Home from "../pages/Home.vue"
 import Login from "../pages/Login.vue"
 import Consent from "../pages/Consent.vue"
 import Signup from "../pages/Signup.vue"
+import Logout from "../pages/Logout.vue"
 import UserInfo from "../pages/UserInfo.vue"
 
 const routes = [
@@ -12,6 +13,7 @@ const routes = [
   { path: "/login", component: Login },
   { path: "/consent", component: Consent },
   { path: "/signup", component: Signup },
+  { path: "/logout", component: Logout },
   { path: "/user-info", component: UserInfo },
 ]
 
