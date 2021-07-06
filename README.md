@@ -28,4 +28,4 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 
 ## OpenAPI Generator
 
-To regenerate the spec: `npx openapi-generator-cli generate --generator-name typescript-fetch --input-spec https://odysseus.yourdomain.com/openapi/docs --output ./generated --skip-validate-spec`
+To regenerate the spec: `npx openapi-generator-cli generate --generator-name typescript-fetch --input-spec https://odysseus.yourdomain.com/openapi/docs --output ./src/openapi --skip-validate-spec`
