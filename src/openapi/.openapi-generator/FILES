@@ -8,5 +8,6 @@ models/NewUserInput.ts
 models/OAuthConsentBody.ts
 models/UserInfo.ts
 models/UserInfoAddress.ts
+models/ValidateCode.ts
 models/index.ts
 runtime.ts

@@ -14,34 +14,34 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- * 
+ * Code validation input
  * @export
- * @interface OAuthConsentBody
+ * @interface ValidateCode
  */
-export interface OAuthConsentBody {
+export interface ValidateCode {
     /**
-     * The user authorized these scopes
-     * @type {Array<string>}
-     * @memberof OAuthConsentBody
+     * The TOTP code.
+     * @type {string}
+     * @memberof ValidateCode
      */
-    scopes: Array<string>;
+    code: string;
 }
 
-export function OAuthConsentBodyFromJSON(json: any): OAuthConsentBody {
-    return OAuthConsentBodyFromJSONTyped(json, false);
+export function ValidateCodeFromJSON(json: any): ValidateCode {
+    return ValidateCodeFromJSONTyped(json, false);
 }
 
-export function OAuthConsentBodyFromJSONTyped(json: any, ignoreDiscriminator: boolean): OAuthConsentBody {
+export function ValidateCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ValidateCode {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'scopes': json['scopes'],
+        'code': json['code'],
     };
 }
 
-export function OAuthConsentBodyToJSON(value?: OAuthConsentBody | null): any {
+export function ValidateCodeToJSON(value?: ValidateCode | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -50,7 +50,7 @@ export function OAuthConsentBodyToJSON(value?: OAuthConsentBody | null): any {
     }
     return {
         
-        'scopes': value.scopes,
+        'code': value.code,
     };
 }
 

@@ -4,3 +4,4 @@ export * from './NewUserInput';
 export * from './OAuthConsentBody';
 export * from './UserInfo';
 export * from './UserInfoAddress';
+export * from './ValidateCode';

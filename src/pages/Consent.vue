@@ -31,7 +31,7 @@ const ConsentPage = defineComponent({
       e.preventDefault()
       try {
         const body = { scopes: requestedScopes.value }
-        const response = await apiClient.apiV1ConsentPost({ body, consentChallenge: consentChallenge.value })
+        const response = await apiClient.apiV1OauthConsentPost({ body, consentChallenge: consentChallenge.value })
         console.log(response)
         if (response.redirectTo) {
           window.location.href = response.redirectTo

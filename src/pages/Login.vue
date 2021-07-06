@@ -80,7 +80,7 @@ const LoginPage = defineComponent({
       const body = { email, password }
       try {
         if (loginChallenge.value) {
-          const response = await apiClient.apiV1LoginPost({ body, loginChallenge: loginChallenge.value })
+          const response = await apiClient.apiV1OauthLoginPost({ body, loginChallenge: loginChallenge.value })
           // const response: { redirect_to?: string } = await httpClient
           //   .post("v1/login", { json, searchParams: { login_challenge: loginChallenge.value } })
           //   .json()
